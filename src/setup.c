@@ -15,6 +15,14 @@ static void io_uring_unmap_rings(struct io_uring_sq *sq, struct io_uring_cq *cq)
 		__sys_munmap(cq->ring_ptr, cq->ring_sz);
 }
 
+/// @brief 
+/// 将内核态与用户态内存进行映射，达到共享内存的目的
+/// 此处使用了两次 mmap 分别对 SQ, CQ 和单独的 SQEs 进行映射
+/// @param fd 使用 io_uring_setup 创建得到的 file descriptor
+/// @param p 相关参数
+/// @param sq 存储 SQ 相关的参量
+/// @param cq 存储 CQ 相关的参量
+/// @return int 0 表示成功
 static int io_uring_mmap(int fd, struct io_uring_params *p,
 			 struct io_uring_sq *sq, struct io_uring_cq *cq)
 {

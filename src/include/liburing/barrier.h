@@ -67,9 +67,12 @@ static inline void io_uring_smp_mb()
 	atomic_load_explicit((_Atomic __typeof__(var) *)&(var),	\
 			     memory_order_relaxed)
 
+// 写内存屏障
 #define io_uring_smp_store_release(p, v)			\
 	atomic_store_explicit((_Atomic __typeof__(*(p)) *)(p), (v), \
 			      memory_order_release)
+
+// 读内存屏障
 #define io_uring_smp_load_acquire(p)				\
 	atomic_load_explicit((_Atomic __typeof__(*(p)) *)(p),	\
 			     memory_order_acquire)
